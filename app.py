@@ -1,13 +1,10 @@
 import os
 import random
-import requests
 import openai
 import urllib.request
 
-from PIL import Image
 from datetime import datetime
-from io import BytesIO
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -15,7 +12,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/", methods=("GET", "POST"))
 def index():
-    """if request.method == "POST":"""
+    """Complete list of words, nouns etc. Can be updated to users preferances"""
     nouns = ['people',
              'history',
              'way',
@@ -4046,6 +4043,7 @@ def index():
               'surrealistic',
               'pop art']
 
+    """Make random choice from lists"""
     rand1 = random.choice(nouns)
     rand2 = random.choice(verbs)
     rand3 = random.choice(adjectives)
@@ -4055,10 +4053,11 @@ def index():
     rand7 = random.choice(paint)
     rand8 = random.choice(styles)
 
+    """Create the prompt that OpenAI is going to use to generate image"""
     content = rand5 + " to " + rand6 + " " + rand5 + " with " + rand1 + " and " + \
               rand3 + " " + rand5 + " the " + rand8 + " " + "oilpainting"
 
-    """Write prompt to file to see what prompt OpenAI gets"""
+    """Write prompt to file to see what OpenAI gets and to improve prompt"""
     with open("generated_text.txt", "a+") as file_object:
         # Move read cursor to the start of file.
         file_object.seek(0)
@@ -4069,6 +4068,10 @@ def index():
             # Append text at the end of file
         file_object.write(content)
 
+    """This is the image generation call to OpenAI. n is how many images (1-10), 
+    size is the image size created (can be changed to 128x128 or 512x512). 
+    Generates a url where the image is stored"""
+
     response = openai.Image.create(
         prompt=content,
         n=1,
@@ -4078,6 +4081,8 @@ def index():
 
     timeNow = datetime.now().strftime("%S")
 
+    """Extract the image from the url and store it as a image in the img folder for 
+    later use (since the site will auto-update the prompt after 24 hours)"""
     url = image_url
     with urllib.request.urlopen(url) as response:
         blob = response.read()

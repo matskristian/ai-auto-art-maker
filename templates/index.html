@@ -1,8 +1,10 @@
+<!--Author: Mats Sorensen 2022-->
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Auto-generating AI art</title>
     <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='AI-icon.jpg') }}" /> <!-- Author: <a href="https://www.vecteezy.com/free-vector/ai-icon">Ai Icon Vectors by Vecteezy</a>-->
-    <meta http-equiv="refresh" content="86400">
+    <meta http-equiv="refresh" content="86400"> <!--86400 = 24 hours. Can be changed to suit user-->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
 
@@ -13,3 +15,4 @@
     <div class="result">{{ result }}</div>
 {% endif %}
 </body>
+</html>
