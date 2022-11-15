@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+    <title>Auto-generating AI art</title>
+    <link rel="icon" type="image/jpg" href="/static/AI-icon.jpg" /> <!-- Author: <a href="https://www.vecteezy.com/free-vector/ai-icon">Ai Icon Vectors by Vecteezy</a>-->
+    <meta http-equiv="refresh" content="43200">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+<img src="{{image_url }}" alt="AIart">
+
+{% if result %}
+    <div class="result">{{ result }}</div>
+{% endif %}
+</body>
