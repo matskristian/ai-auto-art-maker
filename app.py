@@ -4034,7 +4034,7 @@ def index():
              'fresco painting',
              'spray painting',
              'digital painting',
-             'handdrawing']
+             'hand drawing']
     styles = ['realistic',
               'photorealistic',
               'expressionistic',
@@ -4055,7 +4055,7 @@ def index():
 
     """Create the prompt that OpenAI is going to use to generate image"""
     content = rand5 + " to " + rand6 + " " + rand5 + " with " + rand1 + " and " + \
-              rand3 + " " + rand5 + " the " + rand8 + " " + "oilpainting"
+              rand3 + " " + rand5 + " the " + rand8 + " " + "oil-painting"
 
     """Write prompt to file to see what OpenAI gets and to improve prompt"""
     with open("generated_text.txt", "a+") as file_object:
