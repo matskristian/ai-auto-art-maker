@@ -4,7 +4,7 @@
     <option name="enabled" value="true" />
   </component>
   <component name="NewModuleRootManager">
-    <orderEntry type="jdk" jdkName="Python 3.9 (openai-quickstart-python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (middagsplanlegger)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

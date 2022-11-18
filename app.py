@@ -5,13 +5,39 @@ import urllib.request
 
 from datetime import datetime
 from flask import Flask, render_template
+from google.cloud import datastore
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
+datastore_client = datastore.Client()
+
+
+def store_time(dt):
+    entity = datastore.Entity(key=datastore_client.key('visit'))
+    entity.update({
+        'timestamp': dt
+    })
+
+    datastore_client.put(entity)
+
+
+def fetch_times(limit):
+    query = datastore_client.query(kind='visit')
+    query.order = ['-timestamp']
+
+    times = query.fetch(limit=limit)
+
+    return times
 
 
 @app.route("/", methods=("GET", "POST"))
 def index():
+    # Store the current access time in Datastore.
+    store_time(datetime.datetime.now(tz=datetime.timezone.utc))
+
+    # Fetch the most recent 10 access times from Datastore.
+    times = fetch_times(10)
+
     """Complete list of words, nouns etc. Can be updated to users preferances"""
     nouns = ['people',
              'history',
@@ -4090,4 +4116,4 @@ def index():
         with open('./img/' + str(timeNow) + '.png', 'wb') as f:
             f.write(buffer)
 
-    return render_template("index.html", image_url=image_url)
+    return render_template("index.html", image_url=image_url, times=times)
